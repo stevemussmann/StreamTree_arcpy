@@ -6,7 +6,7 @@ from arcpy import env
 import os
 import sys
 import getopt
-import re
+from comline import ComLine
 
 # get the working directory
 wd = os.getcwd()
@@ -16,37 +16,6 @@ env.workspace = wd
 arcpy.env.overwriteOutput=True
 arcpy.env.XYResolution = "1 Meters"
 arcpy.env.XYTolerance = "1 Meters"
-
-
-# set default names of input files
-points = "crb_sites_selected.shp"
-streams = "crb_streams.shp"
-
-# parse the command line arguments
-def comline(argv):
-	try:
-		opts, args = getopt.getopt(argv, "hp:s:", ["help", "vertices=", "streams="])
-	except getopt.GetoptError:
-		usage()
-		sys.exit(2)
-	for opt, arg in opts:
-		if opt in ("-h", "--help"):
-			usage()
-			sys.exit()
-		elif opt in ("-p", "--points"):
-			global vertices
-			inshp = arg
-		elif opt in ("-s", "--streams"):
-			global streams
-			names = arg
-	source = "".join(args)
-
-# define the usage to print for the help message
-def usage():
-	print ("This is the usage")
-
-# parse the command line
-comline(sys.argv[1:])
 
 def dissolve_lines(streams,out):
 	print("Dissolving input streams file", streams)
@@ -100,6 +69,10 @@ def merge_points(erased,points,out):
 	arcpy.Merge_management([erased,points],out,fieldMappings)
 	
 def main():
+	obj = ComLine(sys.argv[1:])
+	streams = obj.args.streams
+	points = obj.args.points
+
 	dissolved = dissolve_lines(streams, "streams_dissolve.shp") #dissolve a streams layer with many line segments
 	snap_points(points, dissolved)#snap points to the streams to ensure they will accurately split the lines
 	splits = split_line(points,dissolved,"split_streams.shp") #split all lines at the sampling sites
