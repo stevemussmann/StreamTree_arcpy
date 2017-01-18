@@ -10,7 +10,7 @@ def main():
 	verts = FindVertices(input.args.points, input.args.streams,input.args.code)
 	print verts.vertices
 	print verts.splits
-	lines = FindLines(verts.vertices,verts.splits)
+	lines = FindLines(verts.vertices,verts.splits,input.args.code)
 	
 main()
 
