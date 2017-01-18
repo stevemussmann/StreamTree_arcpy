@@ -4,7 +4,7 @@ import os
 
 class FindLines():
 	'Class for identifying stream segments that fall between '
-	def __init__(self,vertices,streams):
+	def __init__(self,vertices,streams,code):
 		# set workspace
 		arcpy.env.workspace = os.getcwd()
 		arcpy.env.overwriteOutput=True
@@ -15,6 +15,7 @@ class FindLines():
 		st_layer = arcpy.MakeFeatureLayer_management(streams, "stream_layer")
 		self.add_field(vertices,"NODES","TEXT",100)
 		self.select_lines(values, st_layer,vertices)
+		self.replace_null(vertices,code)
 
 	# Get all values of FIDs in vertices table
 	def unique_values(self,table, field):
@@ -40,3 +41,11 @@ class FindLines():
 			
 	def add_field(self,input,fieldname,type,length):
 		arcpy.AddField_management(input, fieldname, type, field_length=length)
+		
+	def replace_null(self,file,field):
+		with arcpy.da.UpdateCursor(file, [field]) as cursor:
+			for row in cursor:
+				if row[0] is None or not str(row[0]).strip():
+					row[0] = "NONE"
+					cursor.updateRow(row)
+		print("Attribute tables updated.")
