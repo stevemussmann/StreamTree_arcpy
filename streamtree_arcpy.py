@@ -3,6 +3,7 @@
 from comline import ComLine
 from find_vertices import FindVertices
 from getlines import FindLines
+from export_table import ExportTable
 import sys
 
 def main():
@@ -11,6 +12,8 @@ def main():
 	print verts.vertices
 	print verts.splits
 	lines = FindLines(verts.vertices,verts.splits,input.args.code)
+	exNodes = ExportTable(verts.vertices, "nodes.txt")
+	exNodes.export(input.args.code)
 	
 main()
 
