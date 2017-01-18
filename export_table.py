@@ -13,14 +13,16 @@ class ExportTable():
 		
 	def export(self,code):
 		fields = arcpy.ListFields(self.shp)
-		field_names = [field.name for field in fields if field.name in ["FID","POINT_X","POINT_Y",code,"NODES"]]
+		#for field in fields:
+		#	print(field.name)
+		field_names = [field.name for field in fields if field.name not in ["Shape"]]
 		
-		with open(self.out, 'w+') as file:
+		with open(self.out, 'wb+') as file:
 			w = csv.writer(file)
 			w.writerow(field_names)
 			
 			for row in arcpy.SearchCursor(self.shp):
 				#if field.name not in ["POINT_X","POINT_Y",code]:
-				field_vals = [row.getValue(field.name) for field in fields if field.name in ["FID","POINT_X","POINT_Y",code,"NODES"]]
+				field_vals = [row.getValue(field.name) for field in fields if field.name not in ["Shape"]]
 				w.writerow(field_vals)
 			del row

@@ -14,6 +14,8 @@ def main():
 	lines = FindLines(verts.vertices,verts.splits,input.args.code)
 	exNodes = ExportTable(verts.vertices, "nodes.txt")
 	exNodes.export(input.args.code)
+	exBranches = ExportTable(verts.splits, "branches.txt")
+	exBranches.export(input.args.code)
 	
 main()
 
