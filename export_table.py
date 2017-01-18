@@ -1,0 +1,26 @@
+from __future__ import print_function
+import arcpy
+import csv
+import os
+
+class ExportTable():
+	'Class to output table as csv from a shapefile'
+	def __init__(self,shapefile,outfile):
+		arcpy.env.workspace = os.getcwd()
+		arcpy.env.overwriteOutput=True
+		self.shp = shapefile
+		self.out = outfile
+		
+	def export(self,code):
+		fields = arcpy.ListFields(self.shp)
+		field_names = [field.name for field in fields if field.name in ["FID","POINT_X","POINT_Y",code,"NODES"]]
+		
+		with open(self.out, 'w+') as file:
+			w = csv.writer(file)
+			w.writerow(field_names)
+			
+			for row in arcpy.SearchCursor(self.shp):
+				#if field.name not in ["POINT_X","POINT_Y",code]:
+				field_vals = [row.getValue(field.name) for field in fields if field.name in ["FID","POINT_X","POINT_Y",code,"NODES"]]
+				w.writerow(field_vals)
+			del row
