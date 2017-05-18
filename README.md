@@ -6,7 +6,7 @@ The main program, streamtree_arcpy.py, takes as input an ESRI shapefile containi
 Important notes:
 * This requires a valid ArcGIS license to use the arcpy tools.  
 * I wrote this using ArcGIS 10.4 and have not tested any older (or newer) versions.
-* I have so far only tested this under Windows.
+* I have so far only tested the Python components under Windows and the Perl scripts under Linux (Ubuntu).
 * Every branch of the stream layer must either end at a site in the points file, or end at a place where the river forks to go to multiple points.
 * Reticulations in the stream file are not allowed.
 
@@ -23,3 +23,5 @@ Important notes:
 ```
 ./gen_dist.pl > gendist_pairs.txt
 ```
+5. Run combine_gen_stream_dist.pl.  This will output a file named streamtree_input.txt.  In the process of creating this file, any negative genetic distance values are converted to zeroes.  
+6. You should now be able to run Stream Tree.  If you receive an error such as "matrix is singular" it probably means that your original streams .shp file has a dead end that does not connect to a sampling site.
