@@ -9,3 +9,10 @@ Important notes:
 * I have so far only tested this under Windows.
 * Every branch of the stream layer must either end at a site in the points file, or end at a place where the river forks to go to multiple points.
 * Reticulations in the stream file are not allowed.
+
+# Steps
+1. Run the streamtree_arcpy.py program on your streams .shp and sites .shp files.
+2. Run the tracepaths.pl Perl script on the output of streamtree_arcpy.py.  Assuming you have not changed the output file names from step 1, this can be done with the command.  The file sitenames.txt is just a plain text file with a list of all site names that are found in your streams .shp file.  tracepaths.pl will print the paths to STDOUT, so you may want to redirect it to a textfile.
+```
+./tracepaths.pl -n nodes.txt -b branches.txt -s sitenames.txt
+```
