@@ -17,5 +17,5 @@ Important notes:
 ./tracepaths.pl -n nodes.txt -b branches.txt -s sitenames.txt
 ```
 3. Generate a matrix of genetic distance values in the program of your choice.  Prepare two files:
-  A. A lower triangular matrix of genetic distance values named "genetic_distances.txt"
-  B. A list of populations in the same order as the rows in the matrix (one population per line) named "pops.txt"
+    1. A lower triangular matrix of genetic distance values named "genetic_distances.txt
+    2. A list of populations in the same order as the rows in the matrix (one population per line) named "pops.txt"
