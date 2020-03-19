@@ -1,6 +1,8 @@
-# StreamTree_arcpy
+# arcpyStreams
 
-This program is designed to create the input for the StreamTree program (http://www.montana.edu/kalinowski/Software/StreamTree.htm) by Kalinowski et al. 2008.
+This program is designed to create the input for the StreamTree program (http://www.montana.edu/kalinowski/Software/StreamTree.htm) by Kalinowski et al. 2008 and calculate geographic distances between sampling locations along a stream network. Additionally, I will develop and publish a manuscript to cite. For now, cite this github repository if you use the code:
+
+Mussmann, S.M. 2020. ArcpyStreams: A method for performing riverscape genetic analysis.
 
 Currently this is a work in progress, and is comprised of multiple scripts.  I am in the process of transitioning the code from a series of Perl scripts to a single Python program.
 
@@ -11,7 +13,7 @@ Important notes:
 * I have so far only tested the Python components under Windows and the Perl scripts under Linux (Ubuntu).
 * Every branch of the stream layer must either end at a site in the points file, or end at a place where the river forks to go to multiple points.
 * Reticulations in the stream file are not allowed.
-* As a pre-processing step to aid in meeting the somewhat restrictive requirements, I will do a "first pass" of the Python code on my input GIS data.  Some of the processing steps involve dissolving the streams layer to create long, contiguous stream segments and splitting the segments at points where sampling sites occur.  I then take the resulting split_streams_projected.shp file, import it into ArcGIS, and do my manual editing to meet the input file requirements.  I realize this is not an ideal workflow, ahd hope to implement a solution that will automate this process at some point in the future.  
+* As a pre-processing step to aid in meeting the somewhat restrictive requirements, I will do a "first pass" of the Python code on my input GIS data.  Some of the processing steps involve dissolving the streams layer to create long, contiguous stream segments and splitting the segments at points where sampling sites occur.  I then take the resulting split_streams_projected.shp file, import it into ArcGIS, and do my manual editing to meet the input file requirements.  I realize this is not an ideal workflow, and hope to implement a solution that will automate this process at some point in the future.  
 
 # Steps
 1. Run the streamtree_arcpy.py program on your streams .shp and sites .shp files.
