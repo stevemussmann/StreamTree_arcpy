@@ -15,7 +15,7 @@ Important notes:
 
 # Steps
 1. Run the streamtree_arcpy.py program on your streams .shp and sites .shp files.
-2. Run the tracepaths.pl Perl script on the output of streamtree_arcpy.py.  Assuming you have not changed the output file names from step 1, this can be done with the command.  The file sitenames.txt is just a plain text file with a list of all site names that are found in your streams .shp file.  tracepaths.pl will print the paths to STDOUT, so you may want to redirect it to a textfile.
+2. Run the tracepaths.pl Perl script on the output of streamtree_arcpy.py.  Assuming you have not changed the output file names from step 1, this can be done with the command.  The file sitenames.txt is just a plain text file with a list of all site names that are found in your streams .shp file.  tracepaths.pl will print the paths to STDOUT, so you may want to redirect it to a textfile. **Remember to remove Windows line breaks on .txt files before executing tracepaths.pl**
 ```
 ./tracepaths.pl -n nodes.txt -b branches.txt -s sitenames.txt > allpaths.txt
 ```
