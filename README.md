@@ -4,7 +4,7 @@
 
 This program is designed to create the input for the StreamTree program (http://www.montana.edu/kalinowski/Software/StreamTree.htm) by Kalinowski et al. 2008 and calculate geographic distances between sampling locations along a stream network. Additionally, I will develop and publish a manuscript to cite. For now, cite this github repository if you use the code:
 
-Mussmann, S.M. 2020. ArcpyStreams: A method for performing riverscape genetic analysis.
+Mussmann, S.M. 2020. ArcpyStreams: A method for performing riverscape genetic analysis. DOI: 10.5281/zenodo.3718571.
 
 Currently this is a work in progress, and is comprised of multiple scripts.  I am in the process of transitioning the code from a series of Perl scripts to a single Python program.
 
