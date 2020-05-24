@@ -3,7 +3,7 @@ import arcpy
 import os
 
 class FindLines():
-	'Class for identifying stream segments that fall between '
+	'Class for identifying stream segments that fall between nodes'
 	def __init__(self,vertices,streams,code):
 		# set workspace
 		arcpy.env.workspace = os.getcwd()
