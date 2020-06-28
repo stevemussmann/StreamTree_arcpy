@@ -14,6 +14,7 @@ my %hash;
 
 my %pophash;
 my %seghash;
+my %pathhash;
 
 open(FILE, $file) or die "Can't open $file: $!\n\n";
 	while(my $line = <FILE>){
@@ -29,37 +30,45 @@ open( FILE, $paths ) or die "Can't open $paths: $!\n\n";
 	}
 close FILE;
 
+foreach my $path( @paths ){
+	my @temp = split(/,/, $path);
+	my $pop1 = shift( @temp );
+	my $pop2 = shift( @temp );
+	
+	$pathhash{$pop1}{$pop2} = join( ",", @temp );
+	$pathhash{$pop2}{$pop1} = join( ",", reverse( @temp ) );
+}
+
 #put genetic distances into hash
 foreach my $pair( @pairs ){
 	my @temp = split( /\s+/, $pair);
 	if($temp[2] < 0){
 		$temp[2] = 0.0;
 	}
+	$pophash{$temp[0]}++;
+	$pophash{$temp[1]}++;
 	$hash{$temp[0]}{$temp[1]} = $temp[2];
 	$hash{$temp[1]}{$temp[0]} = $temp[2];
 }
 
+my @pops;
+foreach my $key( sort {lc($a) cmp lc($b)} keys %pophash ){
+	push @pops, $key;
+}
 
-foreach my $line( @paths ){
-	my @temp = split( /,/, $line );
-	if( exists $hash{$temp[0]} ){
-		if( exists $hash{$temp[0]}{$temp[1]} ){
-			my $curline = $temp[0] . " " . $temp[1] . "\t" . $hash{$temp[0]}{$temp[1]};
-			my $pop1 = shift @temp;
-			my $pop2 = shift @temp;
-			$pophash{$pop1}++;
-			$pophash{$pop2}++;
-			foreach my $segment( @temp ){
-				$seghash{$segment}++;
-				$curline .= "\t";
-				$curline .= $segment;
-			}
-			$curline .= "\n";
-			push @outlines, $curline;
-		}else{
-			#print "not found\n";
+for( my $i=0; $i<@pops; $i++ ){
+	for( my $j=$i+1; $j<@pops; $j++ ){
+		my $curline = $pops[$i] . " " . $pops[$j] . "\t" . $hash{$pops[$i]}{$pops[$j]};
+		my @temp = split( /,/, $pathhash{$pops[$i]}{$pops[$j]} );
+		foreach my $segment( @temp ){
+			$seghash{$segment}++;
+			$curline .= "\t";
+			$curline .= $segment;
 		}
+		$curline .= "\n";
+		push @outlines, $curline;
 	}
+	
 }
 
 my %segmap;
@@ -84,11 +93,9 @@ open( OUT, '>', "streamtree_input.txt" ) or die "Can't open streamtree_input.txt
 
 print OUT "TITLE = SPD StreamTree Data\n";
 print OUT "SAMPLES = ";
-my @pops;
-foreach my $key( sort {lc($a) cmp lc($b)} keys %pophash ){
-	push @pops, $key;
-}
+
 my $string = join( ", ", @pops );
+
 print OUT $string, "\n";
 print OUT "NSECTIONS = ";
 print OUT scalar(keys %seghash), "\n";
