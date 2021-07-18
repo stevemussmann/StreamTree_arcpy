@@ -39,7 +39,7 @@ dos2unix branch_distances.txt
     
 7. Convert the streamdistances.txt file to tab-delimited.
 ```
-sed 's/,/\t/g' streamdistances.txt
+sed -i 's/,/\t/g' streamdistances.txt
 ```
 
 8. Use the addMantel2arlequin.pl script in my file converters repository to add the distance matrix to the Arlequin file. Replace "arlequinProject.arp" in the line of code below with the actual name of your arlequin project.
