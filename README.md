@@ -23,12 +23,14 @@ Important notes:
 ```
 ./tracepaths.pl -n nodes.txt -b branches.txt -s sitenames.txt > allpaths.txt
 ```
-3. Generate a matrix of genetic distance values in the program of your choice.  Prepare two files:
+3. Assuming you have a filtered VCF of SNPs, convert this to an arlequin file. I don't have a file converter that goes directly from VCF to arlequin format, so I first use vcf2phylip (https://github.com/edgardomortiz/vcf2phylip) to make a conversion to phylip. Then I use the phy2str.pl converter in my file converters repository (https://github.com/stevemussmann/file_converters) to convert to str. Finally, I convert to arlequin using my str2arlequin.pl converter. Please note the structure file produced in this process does not contain population information. Therefore, the str2arlequin.pl converter requires a popmap file (format = 1 tab-delimited line per individual; Each line = "sampleID<tab>population"). 
+
+4. Generate a matrix of genetic distance values in the program of your choice.  Prepare two files:
     1. A lower triangular matrix of genetic distance values named "genetic_distances.txt"
     2. A list of populations in the same order as the rows in the matrix (one population per line) named "pops.txt"
-4. Run gen_dist.pl
+5. Run gen_dist.pl
 ```
 ./gen_dist.pl > gendist_pairs.txt
 ```
-5. Run combine_gen_stream_dist.pl.  This will output a file named streamtree_input.txt.  In the process of creating this file, any negative genetic distance values are converted to zeroes.  
-6. You should now be able to run Stream Tree.  If you receive an error such as "matrix is singular" it probably means that your original streams .shp file has a dead end that does not connect to a sampling site.
+6. Run combine_gen_stream_dist.pl.  This will output a file named streamtree_input.txt.  In the process of creating this file, any negative genetic distance values are converted to zeroes.  
+7. You should now be able to run Stream Tree.  If you receive an error such as "matrix is singular" it probably means that your original streams .shp file has a dead end that does not connect to a sampling site.
